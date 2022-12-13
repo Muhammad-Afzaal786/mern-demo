@@ -1,0 +1,20 @@
+import express from "express";
+import mongoose from "mongoose";
+import { Connection } from "./database/db.js";
+import Router from "./routes/route.js";
+import bodyParser from "body-parser";       
+import cors from "cors";
+import dotenv from "dotenv";
+const app = express();
+mongoose.set('strictQuery', true);
+dotenv.config();
+app.use(cors());
+app.use(bodyParser.json({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use("/", Router);
+const PORT = process.env.PORT;
+const username= process.env.DB_USERNAME;
+const password= process.env.DB_PASSWORD;
+app.listen(PORT, () => console.log(`Server running at PORT ${PORT}`));
+
+Connection(username,password);

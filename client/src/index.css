@@ -1,0 +1,39 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.grad1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 90vh;
+  width: 100%;
+  background-color: red;
+  /* For browsers that do not support gradients */
+  background-image: linear-gradient(to right, #192a56, #2d3436);
+}
+
+.grad1 h1 {
+  text-transform: uppercase;
+  color: white;
+  font-size: 5rem;
+  font-family: 'Eczar', serif;
+}
+.pt{
+  color: black ;
+}
+.user_name span {
+  text-transform: uppercase;
+  margin-right: 10px;
+}
+
+.main_users {
+
+  display: flex;
+  justify-content: center;
+
+  margin-top: 3rem;
+}
