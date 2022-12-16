@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import DataProvider from "./components/context/DataProvider";
 import UserData from "./components/UserData";
 import EditUser from "./components/EditUser";
+import Footer from "./components/Footer";
 import {
   BrowserRouter,
   Navigate,
@@ -18,6 +19,7 @@ const PrivateRoute = ({ isAuthenticated, ...props }) => {
     <>
       <Header />
       <Outlet />
+      <Footer/>
     </>
   ) : (
     <Navigate replace to="/login" />
@@ -41,6 +43,7 @@ function App() {
           >
             <Route path="/userdata" element={<UserData />} />
           </Route>
+         
           <Route
             path="/"
             element={<PrivateRoute isAuthenticated={isAuthenticated} />}

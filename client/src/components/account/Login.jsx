@@ -5,7 +5,6 @@ import { API } from '../../service/api';
 import {DataContext} from "../context/DataProvider"
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {useFormik} from "formik"
 const Component = styled(Box)`
     margin-top : 5rem;
     width: 400px;
@@ -57,12 +56,14 @@ const Error = styled(Typography)`
     font-weight: 600;
 `
 const loginInitialValues = {
-    username: '',
+    email: '',
     password: ''
 };
 const signupInitialValues = {
     name: '',
-    username: '',
+    email:'',
+    phone:'',
+    employee:'',
     password: '',
 };
 const Login = ({isUserAuthenticated}) => {
@@ -79,6 +80,7 @@ const Login = ({isUserAuthenticated}) => {
         setSignup({ ...signup, [e.target.name]: e.target.value });
     }
     const signupUsers = async () => {
+        
         let response = await API.userSignup(signup);      
         if (response.isSuccess) {
             showError('');
@@ -98,7 +100,7 @@ const Login = ({isUserAuthenticated}) => {
             navigate('/')
             sessionStorage.setItem('accessToken', `Bearer ${response.data.accessToken}`);
             sessionStorage.setItem('refreshToken', `Bearer ${response.data.refreshToken}`);
-            setAccount({id : response.data._id, username : response.data.username, name : response.data.name,})
+            setAccount({_id : response.data._id, email : response.data.email, name : response.data.name,phone : response.data.phone, employee : response.data.employee})
             isUserAuthenticated(true)
             toast.success(response.data.msg)
         } else {
@@ -118,17 +120,20 @@ const Login = ({isUserAuthenticated}) => {
                 {
                     account === 'login' ?
                         <Wrapper>
-                            <TextField type='text' variant="standard" value={login.username} onChange={(e) => onValueChange(e)} name='username' label='Enter Username' />
-                            <TextField type='password' variant="standard" value={login.password} onChange={(e) => onValueChange(e)} name='password' label='Enter Password' />
+                            <TextField type='text' variant="standard" value={login.email} onChange={(e) => onValueChange(e)} name='email' label='Enter Your Email' />
+                            <TextField type='password' variant="standard" value={login.password} onChange={(e) => onValueChange(e)} name='password' label='Enter Your Password' />
                             {error && <Error>{error}</Error>}
                             <LoginButton variant="contained"  onClick={()=>loginUser()}>Login</LoginButton>
                             <Text style={{ textAlign: 'center' }}>OR</Text>
                             <SignupButton onClick={() => toggleSignup()} style={{ marginBottom: 50 }}>Create an account</SignupButton>
                         </Wrapper> :
                         <Wrapper>
-                            <TextField type='text' variant="standard" value={signup.name} onChange={(e) => onInputChange(e)} name='name' label='Enter Name' />
-                            <TextField type='text' variant="standard" value={signup.username} onChange={(e) => onInputChange(e)} name='username' label='Enter Username' />
-                            <TextField type='password' variant="standard" value={signup.password} onChange={(e) => onInputChange(e)} name='password' label='Enter Password' />
+                            <TextField type='text' variant="standard" value={signup.name} onChange={(e) => onInputChange(e)} name='name' label='Enter Your Name' />
+                            <TextField type='text' variant="standard" value={signup.phone} onChange={(e) => onInputChange(e)} name='phone' label='Enter Your Phone' />
+                            <TextField type='text' variant="standard" value={signup.email} onChange={(e) => onInputChange(e)} name='email' label='Enter Your Email' />
+                            <TextField type='text' variant="standard" value={signup.employee} onChange={(e) => onInputChange(e)} name='employee' label='Employee' />
+
+                            <TextField type='password' variant="standard" value={signup.password} onChange={(e) => onInputChange(e)} name='password' label='Enter Your Password' />
                             <SignupButton  onClick={() => signupUsers()}>Signup</SignupButton>
                             <Text style={{ textAlign: 'center' }}>OR</Text>
                             <LoginButton variant="contained" onClick={() => toggleSignup()}>Already have an account</LoginButton>

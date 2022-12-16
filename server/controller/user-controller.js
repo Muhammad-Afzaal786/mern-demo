@@ -9,7 +9,9 @@ export const singupUser = async (request, response) => {
   const hashPassword = await bcrypt.hash(request.body.password, 10);
   const user = {
     name: request.body.name,
-    username: request.body.username,
+    email: request.body.email,
+    phone: request.body.phone,
+    employee: request.body.employee,
     password: hashPassword,
   };
 
@@ -20,14 +22,14 @@ export const singupUser = async (request, response) => {
 
     return response.status(200).json({ msg: "Signup Successful" });
   } catch (error) {
-    return response.status(500).json({ msg: "Error while signup user" });
+    return response.status(500).json({ message:error.message });
   }
 };
 
 export const loginUser = async (request, response) => {
-  let user = await User.findOne({ username: request.body.username });
+  let user = await User.findOne({ email: request.body.email });
   if (!user) {
-    return response.status(400).json({ msg: "Username does not match" });
+    return response.status(400).json({ msg: "Email does not match" });
   }
   try {
     let match = await bcrypt.compare(request.body.password, user.password);
@@ -47,7 +49,10 @@ export const loginUser = async (request, response) => {
         accessToken: accessToken,
         refreshToken: refreshToken,
         name: user.name,
-        username: user.username,
+        email: user.email,
+        phone: user.phone,
+        employee: user.employee,
+        _id: user._id
       });
      
     } else {

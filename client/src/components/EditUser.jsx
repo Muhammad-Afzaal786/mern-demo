@@ -1,16 +1,13 @@
 import React, { useState} from 'react';
 //import { ToastContainer, toast } from 'react-toastify';
 import { TextField, Box, Button, styled } from '@mui/material';
-//import { useNavigate } from 'react-router-dom';
-
 import {  loadUser, editUserData } from '../service/api';
-//import { DataContext } from '../context/DataProvider';
 import {useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 const Component = styled(Box)`
     margin-top : 5rem;
     width: 400px;
-    margin: auto;
+   
     box-shadow: 5px 2px 5px 2px rgb(0 0 0/ 0.6);
 `;
 
@@ -45,8 +42,8 @@ const UserButton = styled(Button)`
 
 const UserInitialValues = {
     name: '',
-    username: '',
-    password: '',
+    employee: '',
+   
 };
 
 const EditUser = () => {
@@ -71,17 +68,19 @@ const EditUser = () => {
    navigate('/userdata')
     }
     return (
-        <Component>
+       <div className='d-flex justify-content-center'>
+         <Component>
             
             <Box>
                <Heading>PURSUE <span style={{color:"#FB641B"}}>Today</span></Heading>                     
                         <Wrapper>
                             <TextField type='text' variant="standard" value={user.name} onChange={(e) => onInputChange(e)} name='name' label='Enter Name' />
-                            <TextField type='text' variant="standard" value={user.username} onChange={(e) => onInputChange(e)} name='username' label='Enter Username' />                           
+                            <TextField type='text' variant="standard" value={user.employee} onChange={(e) => onInputChange(e)} name='employee' label='Employee' />                           
                         <UserButton variant="standard"  onClick={editUsersData}>Save User</UserButton>                          
                         </Wrapper>               
             </Box>
         </Component>
+       </div>
     )
 }
 

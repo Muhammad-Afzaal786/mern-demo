@@ -20,7 +20,4 @@ router.put("/:id", editUserData);
 router.delete("/:id", deleteUser);
 
 
-
-
-
 export default router;
